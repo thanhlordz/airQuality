@@ -2,19 +2,13 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
-#include <TinyGPS++.h>
-#include <SoftwareSerial.h>
 
-const char* ssid = "Am Thanh Co";                //Name and Password Wifi
-const char* password = "123456799";
+const char* ssid = "Quanser_UVS";                //Name and Password Wifi
+const char* password = "UVS_wifi";
 const char* mqttServer = "192.168.2.10";          //Ip MQTT Server
-const int RX_PIN = D5, TX_PIN = D6;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-
-TinyGPSPlus gps; // The TinyGPS++ object
-SoftwareSerial gpsSerial(RX_PIN, TX_PIN); // The serial interface to the GPS device
 
 void connectMQTT(){
   while (!client.connected()){
@@ -99,17 +93,14 @@ boolean readPMSdata(Stream *s) {
 
 void setup(){
   Serial.begin(9600);
-  /*wifiConnect();
-  client.setServer(mqttServer, 1883);*/
-  gpsSerial.begin(9600);
-
-  Serial.println(F("ESP8266 - GPS module"));
+  wifiConnect();
+  client.setServer(mqttServer, 1883);
   delay(200); 
 }
 
 
 void loop(){
-  /*connectMQTT();
+  connectMQTT();
   wifiConnect();
   if (readPMSdata(&Serial)) {
     Serial.println("---------------------------------------");
@@ -144,54 +135,5 @@ void loop(){
     for (int i =0; i < 5; i++){
       delay(2000);
     }
-  }*/
-  if (gpsSerial.available() > 0) {
-    if (gps.encode(gpsSerial.read())) {
-      if (gps.location.isValid()) {
-        Serial.print(F("- latitude: "));
-        Serial.println(gps.location.lat());
-
-        Serial.print(F("- longitude: "));
-        Serial.println(gps.location.lng());
-
-        Serial.print(F("- altitude: "));
-        if (gps.altitude.isValid())
-          Serial.println(gps.altitude.meters());
-        else
-          Serial.println(F("INVALID"));
-      } else {
-        Serial.println(F("- location: INVALID"));
-      }
-
-      Serial.print(F("- speed: "));
-      if (gps.speed.isValid()) {
-        Serial.print(gps.speed.kmph());
-        Serial.println(F(" km/h"));
-      } else {
-        Serial.println(F("INVALID"));
-      }
-
-      Serial.print(F("- GPS date&time: "));
-      if (gps.date.isValid() && gps.time.isValid()) {
-        Serial.print(gps.date.year());
-        Serial.print(F("-"));
-        Serial.print(gps.date.month());
-        Serial.print(F("-"));
-        Serial.print(gps.date.day());
-        Serial.print(F(" "));
-        Serial.print(gps.time.hour());
-        Serial.print(F(":"));
-        Serial.print(gps.time.minute());
-        Serial.print(F(":"));
-        Serial.println(gps.time.second());
-      } else {
-        Serial.println(F("INVALID"));
-      }
-
-      Serial.println();
-    }
   }
-
-  if (millis() > 5000 && gps.charsProcessed() < 10)
-    Serial.println(F("No GPS data received: check wiring"));
 }

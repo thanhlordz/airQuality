@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "airquality-425803",
+  "private_key_id": "1b6247c84a320b84b663880be76f7a4bfa1bfb15",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCkvHMImMmIkQlh\nPp9bjmAtnnpYjTKsA7LBCFl+kXhcOPXuFy1uNPGfzXGl2YAMkx/BeA0YA+tHUfLp\nqVFRQJW7JeF0QOufgP1q4ljue0OAtE2Zrsi7JZcuN5JfapejTHQB3FFSCMYFAVCY\nc7xgurNlAgbKH/4lomflbX67K2kanK7fwoYSNQui5+4PLNeKWyzO/JJUqGQPu7PK\nwWYJMAIui2pFzaAR1CmzV5VnohAqR8esY7QfnKsE6LAxXm6wBRjrVSI9gA/X+sZL\nAqmSk9A85ljI8SeyzEKK/T7cw8QGP9CS8x2cF65cISsXMsGbeWl7lgIOemmth9+j\naUe8RoKFAgMBAAECggEAEi41ENQR29dL3nZTjn5sSWSV0ouEtdyzn9+cxt3ll2H2\n7EeVDTZdGzqIahoSqnCbPtYRtd6K2wRlh1mXHp0+2RhhZRvcFS6eaSshTvJ+HOhp\nLwaN4y+PG3vpFMw1/4DqxaDLvb63oepG+4g8WD2KmmFqn+h/eyZNCpI2vA/aqePH\nAlGPP/9p33cXkkc4/jbFnf+Vb7aMlPLpfMVv+GhnYprAAnAiCjXV8qOv/4tkd9De\nVdhrIR6HE4/nu0f2a/K0XiTkke8COP0sewkjBbCFK+7nWHKT7uFyDSVVJ7qpjTbD\nt0GQLtvbYrktRWppDmCxZtWWFZTk2FE/4D3C/lIgCQKBgQDU7fDCl6+gZC6s/QiA\n04QCLAU49cnitWIECCCvz9X0IPYZeRq16B3DlgPflGSXumak+/XWXWaAhL2HWxY3\nPmwTDQvaqVxG12WkcLp9XoLIjMF3IsRS/QyVMNTbbKQOcz83fEVWtMOp4+DsgWOV\n3kgG9U8wEOFtkq514dK7fAP9qQKBgQDGDu3R+HwPx+oJEongSUjyxj9aUNOuiwJc\nkVWs9wkh74dLm46uKDHnEREcSwTo1Xw86vZ48dsf0TI8pH4mlNZghymDpj3G5XlW\n+PS8noyvkzBLkFJadWfdnANxjKQBE0CO9ws9C2laCsX7pps9O0Arfm2mpyNoGpkh\nNyMrxXjPfQKBgA/bvM+xXmoyq+tEWSrHFhDXWHg6jhOtcKReOpj9gLDS96FEDMI5\njGXxuU4gjjFit5xYC6IwiJ7PxBHdrdTleEUe9qANdwrrpe1OXAVUUadAHHSUCU0o\n/ZPq9B93gux0luO6BKwFgIEZsLnMlS8nQ/QItyIcT73Ka+XpsLk37lApAoGAJHbn\nLjtTjAxAeH8jR1n2xkvdqiErd/076BMR9RBebBMPk8oGEOZxmZs4zT66nqt/fi+8\nRTQyJb98QlH+r9fDSG5aJFTdFtt05aBcXsXKHSE6SQ8/OkxXXSO2NpewMkp7Hlc5\niHmrYdqN7PEVr8ZS4C8cvQwUprwO6WCfZxWqUnkCgYBv85hRTg3moFT7y0oNH48V\nzm1y4OaBUV11e/crBc4pdKXPWFUcV7WfQeO9X3+Tr0BvUUAkHxII6gF1Nv5tKreA\nvc8RnzBQFrn6+ehh26nwlwf9W/7ZVL1+eLBnvx8RvFBMVvQYS8o09SVmAiq/htXZ\ny/H+q7CQxnwVSnZxumm2jw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "thanhcloud@airquality-425803.iam.gserviceaccount.com",
+  "client_id": "118137997711145197238",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/thanhcloud%40airquality-425803.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
