@@ -3,9 +3,9 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "Quanser_UVS";                //Name and Password Wifi
-const char* password = "UVS_wifi";
-const char* mqttServer = "192.168.2.10";          //Ip MQTT Server
+const char* ssid = "AetLab";                //Name and Password Wifi
+const char* password = "123456799z";
+const char* mqttServer = "192.168.8.130";          //Ip MQTT Server
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -132,8 +132,6 @@ void loop(){
     Serial.print("Package: ");
     Serial.println(msg);
     client.publish("home_sensor/air", msg);
-    for (int i =0; i < 5; i++){
-      delay(2000);
-    }
+    delay(10000);
   }
 }

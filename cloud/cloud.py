@@ -107,7 +107,7 @@ def on_message(client, userdata, message):
         data["hour"] = time_hour
         
         # Writing data to a csv file
-        csv_file_path = "/home/phamtung/Desktop/Collecting/" + csv_name + ".csv" 
+        csv_file_path = "/home/aetlab/Desktop/Air_Data/" + csv_name + ".csv" 
         if not (os.path.exists(csv_file_path)):
             with open(csv_file_path, mode='w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
