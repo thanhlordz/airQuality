@@ -2,7 +2,11 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#include <TinyGPS++.h>
+#include <SoftwareSerial.h>
 
+#define RXPin D5
+#define TXPin D6
 const char* ssid = "AetLab";                //Name and Password Wifi
 const char* password = "123456799z";
 const char* mqttServer = "192.168.8.130";          //Ip MQTT Server
@@ -39,6 +43,9 @@ void wifiConnect(){
     Serial.println(WiFi.localIP());
   }
 }
+
+TinyGPSPlus gps;
+SoftwareSerial ss(RXPin, TXPin);
 struct pms5003data {
   uint16_t framelen;
   uint16_t pm10_standard, pm25_standard, pm100_standard;
@@ -47,6 +54,13 @@ struct pms5003data {
   uint16_t unused;
   uint16_t checksum;
 };
+
+struct Location{
+  double latitude;
+  double longitude;
+};
+
+Location loca;
 struct pms5003data data;
 
 boolean readPMSdata(Stream *s) {
@@ -93,6 +107,7 @@ boolean readPMSdata(Stream *s) {
 
 void setup(){
   Serial.begin(9600);
+  ss.begin(9600);
   wifiConnect();
   client.setServer(mqttServer, 1883);
   delay(200); 
@@ -102,32 +117,49 @@ void setup(){
 void loop(){
   connectMQTT();
   wifiConnect();
-  if (readPMSdata(&Serial)) {
-    Serial.println("---------------------------------------");
-    Serial.println("Concentration Units (standard)");
-    Serial.print("PM 1.0: "); Serial.print(data.pm10_standard);
-    Serial.print("\t\tPM 2.5: "); Serial.print(data.pm25_standard);
-    Serial.print("\t\tPM 10: "); Serial.println(data.pm100_standard);
-    Serial.println("---------------------------------------");
-    Serial.println("Concentration Units (environmental)");
-    Serial.print("PM 1.0: "); Serial.print(data.pm10_env);
-    Serial.print("\t\tPM 2.5: "); Serial.print(data.pm25_env);
-    Serial.print("\t\tPM 10: "); Serial.println(data.pm100_env);
-    Serial.println("---------------------------------------");
-    Serial.print("Particles > 0.3um / 0.1L air:"); Serial.println(data.particles_03um);
-    Serial.print("Particles > 0.5um / 0.1L air:"); Serial.println(data.particles_05um);
-    Serial.print("Particles > 1.0um / 0.1L air:"); Serial.println(data.particles_10um);
-    Serial.print("Particles > 2.5um / 0.1L air:"); Serial.println(data.particles_25um);
-    Serial.print("Particles > 5.0um / 0.1L air:"); Serial.println(data.particles_50um);
-    Serial.print("Particles > 10.0 um / 0.1L air:"); Serial.println(data.particles_100um);
-    Serial.println("---------------------------------------");
-    
-    JsonDocument doc;
-    char msg[100];
-    doc["pm1"] = data.pm100_standard;
-    doc["pm2_5"] = data.pm25_standard;
-    doc["pm10"] = data.pm100_standard; 
+  while(ss.available() > 0){
+    char c = ss.read();
+    gps.encode(c);
+  }
 
+  if(gps.location.isValid()){
+    loca.latitude = gps.location.lat();
+    Serial.print("Latitude: ");
+    Serial.println(gps.location.lat(), 6); 
+
+    loca.longitude = gps.location.lng();
+    Serial.print("Longitude: ");
+    Serial.println(gps.location.lng(), 6);
+  } else {
+    Serial.println("Location Invalid");
+  }
+
+  if (readPMSdata(&Serial)) {
+    // Serial.println("---------------------------------------");
+    // Serial.println("Concentration Units (standard)");
+    // Serial.print("PM 1.0: "); Serial.print(data.pm10_standard);
+    // Serial.print("\t\tPM 2.5: "); Serial.print(data.pm25_standard);
+    // Serial.print("\t\tPM 10: "); Serial.println(data.pm100_standard);
+    // Serial.println("---------------------------------------");
+    // Serial.println("Concentration Units (environmental)");
+    // Serial.print("PM 1.0: "); Serial.print(data.pm10_env);
+    // Serial.print("\t\tPM 2.5: "); Serial.print(data.pm25_env);
+    // Serial.print("\t\tPM 10: "); Serial.println(data.pm100_env);
+    // Serial.println("---------------------------------------");
+    // Serial.print("Particles > 0.3um / 0.1L air:"); Serial.println(data.particles_03um);
+    // Serial.print("Particles > 0.5um / 0.1L air:"); Serial.println(data.particles_05um);
+    // Serial.print("Particles > 1.0um / 0.1L air:"); Serial.println(data.particles_10um);
+    // Serial.print("Particles > 2.5um / 0.1L air:"); Serial.println(data.particles_25um);
+    // Serial.print("Particles > 5.0um / 0.1L air:"); Serial.println(data.particles_50um);
+    // Serial.print("Particles > 10.0 um / 0.1L air:"); Serial.println(data.particles_100um);
+    // Serial.println("---------------------------------------");
+    
+    StaticJsonDocument<200> doc;
+    char msg[100];
+    doc["pm2_5"] = data.pm25_standard;
+    doc["latitude"] = loca.latitude;
+    doc["longitude"] = loca.longitude;
+  
     serializeJson(doc, msg);
     Serial.print("Package: ");
     Serial.println(msg);

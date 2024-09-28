@@ -111,15 +111,16 @@ def on_message(client, userdata, message):
         if not (os.path.exists(csv_file_path)):
             with open(csv_file_path, mode='w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                print("CSV file already exist.")
-                writer.writerows[["Timestamp", "Year", "Month", "Day", "Hour", "PM1.0", "PM2.5", "PM10"], #Header
-                [data["timestamp"], data["year"], data["month"], data["day"],data["hour"], data["pm1"], data["pm2_5"], data["pm10"]]] #Data 
+                print("CSV file created.")
+                writer.writerow(["Timestamp", "Year", "Month", "Day", "Hour", "PM2.5", "Latitude", "Longitude"]), #Header
+                writer.writerow([data["timestamp"], data["year"], data["month"], data["day"], data["hour"], 
+                            data["pm2_5"], data["latitude"], data["longitude"]])
         else:
             with open(csv_file_path, mode='a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 print("Appending data to CSV file.")
                 writer.writerow([data["timestamp"], data["year"], data["month"], data["day"], data["hour"], 
-                                 data["pm1"], data["pm2_5"], data["pm10"]])
+                                data["pm2_5"], data["latitude"], data["longitude"]])
         try:
             upload_update(csv_file_path, csv_name)
         except Exception as e:
